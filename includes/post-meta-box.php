@@ -106,6 +106,13 @@ class WP_Slack_Post_Meta_Box {
 			'channel'     => 'sanitize_text_field',
 			'username'    => 'sanitize_text_field',
 			'icon_emoji'  => 'sanitize_text_field',
+			'unlock'      => function( $val ) {
+				if ( $val ) {
+					return true;
+				} else {
+					return false;
+				}
+			},
 			'active'      => function( $val ) {
 				if ( $val ) {
 					return true;

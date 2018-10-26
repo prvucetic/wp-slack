@@ -45,9 +45,19 @@ class WP_Slack_Event_Payload {
 		return json_encode( array(
 			'channel'      => $this->setting['channel'],
 			'username'     => $this->setting['username'],
-			'text'         => $this->setting['text'],
+			'text'         => $this->get_text(),
 			'icon_emoji'   => $this->setting['icon_emoji'],
 		) );
+	}
+
+	public function get_text() {
+		$text = str_replace ( '{INTEGRATION_NAME}' , $this->setting['intergation_name'] , $this->setting['text']);
+		if($this->setting['unlock']){
+			$text = str_replace ( '{UNLOCK}' , 'unlock&' , $text);
+		} else {
+			$text = str_replace ( '{UNLOCK}' , '' , $text);
+		}
+		return $text;
 	}
 
 	/**

@@ -62,6 +62,21 @@
 
 		<tr valign="top">
 			<th scope="row">
+				<label for="slack_setting[unlock]"><?php _e( 'Unlock', 'slack' ); ?></label>
+			</th>
+			<td>
+				<label>
+					<input type="checkbox" name="slack_setting[unlock]" id="slack_setting[unlock]" <?php checked( ! empty( $setting['unlock'] ) ? $setting['unlock'] : false ); ?>>
+					<?php _e( 'Append "unlock" to the URL', 'slack' ); ?>
+				</label>
+				<p class="description">
+					<?php _e( '', 'slack' ); ?>
+				</p>
+			</td>
+		</tr>
+
+		<tr valign="top">
+			<th scope="row">
 				<?php _e( 'Events to Notify', 'slack' ); ?>
 			</th>
 			<td>

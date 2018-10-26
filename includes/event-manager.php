@@ -65,6 +65,9 @@ class WP_Slack_Event_Manager {
 
 		foreach ( $integrations as $integration ) {
 			$setting = get_post_meta( $integration->ID, 'slack_integration_setting', true );
+			$intergation_name = get_the_title( $integration->ID );
+
+			$setting['intergation_name'] = $intergation_name; 
 
 			// Skip if inactive.
 			if ( empty( $setting['active'] ) ) {
@@ -118,12 +121,9 @@ class WP_Slack_Event_Manager {
 
 						return sprintf(
 							/* translators: 1) URL, 2) post title, and 3) post author. */
-							__( 'New post published: *<%1$s|%2$s>* by *%3$s*', 'slack' ) . "\n" .
-							'> %4$s',
+							__( ' *<%1$s?{UNLOCK}{INTEGRATION_NAME}|%2$s>*', 'slack' ),
 							get_permalink( $post->ID ),
-							html_entity_decode( get_the_title( $post->ID ), ENT_QUOTES, get_bloginfo( 'charset' ) ),
-							get_the_author_meta( 'display_name', $post->post_author ),
-							html_entity_decode( $excerpt, ENT_QUOTES, get_bloginfo( 'charset' ) )
+							html_entity_decode( get_the_title( $post->ID ), ENT_QUOTES, get_bloginfo( 'charset' ) )
 						);
 					}
 				},
@@ -188,7 +188,7 @@ class WP_Slack_Event_Manager {
 
 					return sprintf(
 						/* translators: 1) edit URL, 2) comment author, 3) post URL, 4) post title, and 5) comment status. */
-						__( '<%1$s|New comment> by *%2$s* on *<%3$s|%4$s>* (_%5$s_)', 'slack' ) . "\n" .
+						__('<%1$s|New comment> by *%2$s* on *<%3$s|%4$s>* (_%5$s_)', 'slack' ) . "\n" .
 						'>%6$s',
 						admin_url( "comment.php?c=$comment_id&action=editcomment" ),
 						$comment->comment_author,
